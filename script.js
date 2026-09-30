@@ -19,3 +19,29 @@ document.querySelector('#copy-message').addEventListener('click', async () => {
   try { await navigator.clipboard.writeText(field.value); document.querySelector('#copy-status').textContent = 'Copied. You can now share your enquiry with Bluey.'; }
   catch { field.focus(); field.select(); document.querySelector('#copy-status').textContent = 'Select and copy the message above to share with Bluey.'; }
 });
+
+// Content remains visible if animation support or JavaScript is unavailable.
+const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+const motionToggle = document.querySelector('.motion-toggle');
+let motionPaused = false;
+const syncMotion = () => {
+  document.body.classList.toggle('motion-paused', motionPaused || motionPreference.matches);
+  motionToggle.hidden = motionPreference.matches;
+  motionToggle.setAttribute('aria-pressed', String(motionPaused));
+  motionToggle.textContent = motionPaused ? 'Resume animations' : 'Pause animations';
+};
+motionToggle.addEventListener('click', () => { motionPaused = !motionPaused; syncMotion(); });
+motionPreference.addEventListener('change', syncMotion);
+syncMotion();
+if ('IntersectionObserver' in window) {
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      if (!motionPreference.matches && !motionPaused) entry.target.classList.add('reveal-in');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.section-heading, .service-grid article, .approach-art, .approach-copy, .faq-list, .contact > div, #enquiry').forEach(element => {
+    revealObserver.observe(element);
+  });
+}

@@ -33,6 +33,57 @@ const syncMotion = () => {
 motionToggle.addEventListener('click', () => { motionPaused = !motionPaused; syncMotion(); });
 motionPreference.addEventListener('change', syncMotion);
 syncMotion();
+// The widget opens WhatsApp only when the visitor chooses to continue.
+const whatsappToggle = document.querySelector('#whatsapp-toggle');
+const whatsappPanel = document.querySelector('#whatsapp-panel');
+const closeWhatsApp = () => {
+  whatsappPanel.hidden = true;
+  whatsappToggle.setAttribute('aria-expanded', 'false');
+  whatsappToggle.focus();
+};
+whatsappToggle.hidden = false;
+whatsappToggle.addEventListener('click', () => {
+  const isOpen = whatsappToggle.getAttribute('aria-expanded') === 'true';
+  whatsappPanel.hidden = isOpen;
+  whatsappToggle.setAttribute('aria-expanded', String(!isOpen));
+  if (!isOpen) document.querySelector('#whatsapp-close').focus();
+});
+document.querySelector('#whatsapp-close').addEventListener('click', closeWhatsApp);
+document.querySelector('.whatsapp-widget').addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !whatsappPanel.hidden) closeWhatsApp();
+});
+
+const feedbackMessage = document.querySelector('#feedback-message');
+feedbackMessage.addEventListener('input', () => feedbackMessage.setCustomValidity(''));
+document.querySelector('#feedback-form').addEventListener('submit', event => {
+  event.preventDefault();
+  const detail = feedbackMessage.value.trim();
+  if (!detail) {
+    feedbackMessage.setCustomValidity('Please add your feedback.');
+    feedbackMessage.reportValidity();
+    return;
+  }
+  const name = document.querySelector('#feedback-name').value.trim();
+  const type = document.querySelector('#feedback-type').value;
+  const rating = document.querySelector('#feedback-rating').value;
+  const message = `Hello Bluey! I’d like to share feedback.\nType: ${type}${name ? `\nName: ${name}` : ''}${rating ? `\nRating: ${rating}` : ''}\nFeedback: ${detail}`;
+  document.querySelector('#feedback-prepared').value = message;
+  document.querySelector('#feedback-result').hidden = false;
+  document.querySelector('#feedback-status').textContent = '';
+  document.querySelector('#feedback-prepared').focus();
+  window.open('https://wa.me/2348128920329?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer');
+});
+document.querySelector('#copy-feedback').addEventListener('click', async () => {
+  const field = document.querySelector('#feedback-prepared');
+  try {
+    await navigator.clipboard.writeText(field.value);
+    document.querySelector('#feedback-status').textContent = 'Copied. You can now share your feedback with Bluey.';
+  } catch {
+    field.focus();
+    field.select();
+    document.querySelector('#feedback-status').textContent = 'Select and copy the message above to share with Bluey.';
+  }
+});
 if ('IntersectionObserver' in window) {
   const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {

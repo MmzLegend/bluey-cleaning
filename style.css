@@ -37,3 +37,34 @@
 .link-arrow svg{display:block;width:100%;height:100%}
 .service-grid .link-arrow,.text-link .link-arrow,.phone-link .link-arrow{width:14px;height:14px}
 .text-link{align-items:center}
+
+/* Customer reassurance, feedback and WhatsApp contact. */
+[hidden]{display:none!important}
+.reassurance{border-top:1px solid var(--line);background:#f0f6fc}
+.reassurance h2{max-width:680px}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.trust-grid article{border-top:2px solid #9fc1ee;padding-top:22px}
+.trust-grid h3{font-size:18px;margin-bottom:10px}
+.trust-grid p{font-size:14px;color:var(--muted);margin-bottom:0}
+.trust-link{margin-top:30px;color:var(--blue);width:fit-content}
+.feedback{display:grid;grid-template-columns:1fr 1fr;gap:10%;align-items:start}
+.feedback>div>p:not(.eyebrow){font-size:15px;color:var(--muted);max-width:390px;margin-top:25px}
+.feedback .feedback-explainer{font-size:13px!important}
+.feedback .text-link{color:var(--blue);margin-top:24px}
+.feedback form{border:1px solid var(--line)}
+#feedback-status{font-size:12px;margin-bottom:0}
+.whatsapp-widget{position:fixed;right:24px;bottom:max(22px,env(safe-area-inset-bottom));z-index:20;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.whatsapp-toggle{display:flex;align-items:center;gap:10px;border:0;border-radius:50px;background:#106a45;color:white;padding:15px 20px;font-size:13px;font-weight:700;box-shadow:0 6px 24px #09285826;cursor:pointer;min-height:54px}
+.whatsapp-toggle:hover{background:#0b5436}
+.whatsapp-icon{flex-shrink:0}
+.whatsapp-panel{width:330px;max-width:calc(100vw - 32px);max-height:calc(100dvh - 110px);overflow:auto;border:1px solid var(--line);border-radius:16px;background:white;padding:22px;box-shadow:0 12px 40px #09285826}
+.whatsapp-heading{display:flex;align-items:start;justify-content:space-between;gap:8px}
+.whatsapp-heading strong{font-size:18px;display:block}
+.whatsapp-heading small{font-size:11px;color:var(--muted)}
+#whatsapp-close{border:0;background:var(--sky);border-radius:50%;width:36px;height:36px;flex-shrink:0;font-size:24px;line-height:1;cursor:pointer;color:var(--ink)}
+.whatsapp-panel p{font-size:14px;color:var(--muted);margin:18px 0}
+.whatsapp-start{width:100%;background:#106a45}
+.whatsapp-start:hover{background:#0b5436}
+.whatsapp-note{display:block;color:var(--muted);font-size:10px;margin-top:10px}
+footer{padding-bottom:110px}
+@media(max-width:700px){.trust-grid{grid-template-columns:1fr;gap:24px}.feedback{grid-template-columns:1fr;gap:30px}.whatsapp-widget{right:16px;bottom:max(16px,env(safe-area-inset-bottom))}.whatsapp-toggle{padding:13px 17px;font-size:12px}.reassurance h2{font-size:34px}.trust-grid p{font-size:13px}}

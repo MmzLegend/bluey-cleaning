@@ -31,3 +31,9 @@
 
 
 
+
+/* Draw link arrows consistently instead of using device emoji glyphs. */
+.link-arrow{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;width:18px;height:18px;vertical-align:middle;pointer-events:none}
+.link-arrow svg{display:block;width:100%;height:100%}
+.service-grid .link-arrow,.text-link .link-arrow,.phone-link .link-arrow{width:14px;height:14px}
+.text-link{align-items:center}
